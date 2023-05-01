@@ -1,5 +1,6 @@
 package ru.yandex.praktikum.stellarburgers;
 
+import io.qameta.allure.Description;
 import ru.yandex.praktikum.stellarburgers.clients.IngredientClient;
 import ru.yandex.praktikum.stellarburgers.clients.OrderClient;
 import ru.yandex.praktikum.stellarburgers.clients.UserClient;
@@ -45,18 +46,10 @@ public class CreateOrderTest {
         accessToken = responseForToken.then().extract().path("accessToken");
 
     }
-
-    @Test
-    @DisplayName("Create order by unauthorized user")
-    public void createOderWithoutAuthorizationTest() {
-        oderClient = new OrderClient();
-        oder = new Order(ingredients);
-        response = oderClient.createOrderByUnauthorizedUser(oder);
-        response.then().assertThat().statusCode(200).and().body("success", equalTo(true));
-    }
-
+    // Тест 1: создание заказа с авторизацией
     @Test
     @DisplayName("Create order by authorized user")
+    @Description("Positive test, a successful server response is 200, the response body contains success: true")
     public void createOderWithAuthorizationTest() {
         oder = new Order(ingredients);
         oderClient = new OrderClient();
@@ -64,9 +57,20 @@ public class CreateOrderTest {
         response.then().assertThat().body("success", equalTo(true)).and().statusCode(200);
 
     }
-
+    // Тест 2: создание заказа без авторизации
+    @Test
+    @DisplayName("Create order by unauthorized user")
+    @Description("Positive test, a successful server response is 200, the response body contains success: true")
+    public void createOderWithoutAuthorizationTest() {
+        oderClient = new OrderClient();
+        oder = new Order(ingredients);
+        response = oderClient.createOrderByUnauthorizedUser(oder);
+        response.then().assertThat().statusCode(200).and().body("success", equalTo(true));
+    }
+    // Тест 3: создание заказа с неверным хешем ингредиентов
     @Test
     @DisplayName("Create order with wrong hash ingredients")
+    @Description("Negative test, for a request with wrong hash ingredients, the system responds with a 500 code")
     public void createOderWithIncorrectIngredient() {
 
         ingredients.add("Test");
@@ -75,9 +79,10 @@ public class CreateOrderTest {
         response = oderClient.createOrderByAuthorizedUser(accessToken, oder);
         response.then().assertThat().statusCode(500);
     }
-
+    // Тест 4: создание заказа без ингредиентов
     @Test
     @DisplayName("Create order without ingredients")
+    @Description("Negative test, for a request without ingredients, the system responds with a 400 code")
     public void createOderWithNullIngredient() {
 
         ingredients.clear();

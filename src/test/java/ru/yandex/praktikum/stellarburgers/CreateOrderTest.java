@@ -71,7 +71,7 @@ public class CreateOrderTest {
     @Test
     @DisplayName("Create order with wrong hash ingredients")
     @Description("Negative test, for a request with wrong hash ingredients, the system responds with a 500 code")
-    public void createOderWithIncorrectIngredient() {
+    public void createOderWithIncorrectIngredientTest() {
 
         ingredients.add("Test");
         oder = new Order(ingredients);
@@ -83,7 +83,7 @@ public class CreateOrderTest {
     @Test
     @DisplayName("Create order without ingredients")
     @Description("Negative test, for a request without ingredients, the system responds with a 400 code")
-    public void createOderWithNullIngredient() {
+    public void createOderWithNullIngredientTest() {
 
         ingredients.clear();
         oder = new Order(ingredients);

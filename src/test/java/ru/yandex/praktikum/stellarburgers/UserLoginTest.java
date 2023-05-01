@@ -26,7 +26,7 @@ public class UserLoginTest {
     @Test
     @DisplayName("Login user with all required fields")
     @Description("Positive test, a successful server response is 200, the response body contains success: true")
-    public void testUserLogin() {
+    public void userLoginTest() {
         response = userClient.loginUser(user);
         response.then().assertThat().body("success", equalTo(true)).and().statusCode(200);
     }
@@ -34,7 +34,7 @@ public class UserLoginTest {
     @Test
     @DisplayName("Login user with wrong login")
     @Description("Negative test, for a request with an incorrect email, the system responds with a 401 code")
-    public void testUserLoginWithIncorrectEmail() {
+    public void userLoginWithIncorrectEmailTest() {
         user.setEmail("test");
         response = userClient.loginUser(user);
         response.then().assertThat().body("success", equalTo(false)).and().statusCode(401);
@@ -43,7 +43,7 @@ public class UserLoginTest {
     @Test
     @DisplayName("Login user with wrong password")
     @Description("Negative scenario, for a request with an incorrect password, the system responds with a 401 code")
-    public void testUserLoginWithIncorrectPassword() {
+    public void userLoginWithIncorrectPasswordTest() {
         user.setPassword("test");
         response = userClient.loginUser(user);
         response.then().assertThat().body("success", equalTo(false)).and().statusCode(401);

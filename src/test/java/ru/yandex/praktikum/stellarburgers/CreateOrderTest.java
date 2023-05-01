@@ -46,7 +46,7 @@ public class CreateOrderTest {
         accessToken = responseForToken.then().extract().path("accessToken");
 
     }
-    // Тест 1: создание заказа с авторизацией
+    // Тест 1: создание заказа с авторизацией и ингредиентами
     @Test
     @DisplayName("Create order by authorized user")
     @Description("Positive test, a successful server response is 200, the response body contains success: true")
